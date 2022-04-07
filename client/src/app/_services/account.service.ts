@@ -19,10 +19,9 @@ export class AccountService {
 
   constructor(private http: HttpClient) { }
 
-  login(model: any) {
+  public login(model: any) {
     return this.http.post(this.baseUrl + 'account/login', model)
-      .pipe(
-        map((response: User) => {
+      .pipe(map((response: User) => {
           const user = response;
           if (user) {
             localStorage.setItem('user', JSON.stringify(user));
@@ -49,7 +48,7 @@ export class AccountService {
             localStorage.setItem('user', JSON.stringify(user));
             this.currentUserSource.next(user)
           }
-          return user;
+         return user;
         })
       )
   }
