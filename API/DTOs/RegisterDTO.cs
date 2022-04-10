@@ -7,7 +7,8 @@ namespace API.DTOs
         [Required]
         public string Username { get; set; }
 
-        [Required] // validation, part of API
+        [Required]
+        [StringLength(8, MinimumLength =4)]// validation, part of API
         public string Password { get; set; }
     }
 }
