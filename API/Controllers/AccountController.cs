@@ -13,9 +13,8 @@ namespace API.Controllers
     {
         public readonly DataContext _context;
         private readonly ITokenService _tokenService;
-        private readonly ITokenService tokenService;
 
-        // why interface and not a service injected?
+
         public AccountController(DataContext context, ITokenService tokenService)
         {
             _context = context;
@@ -42,6 +41,7 @@ namespace API.Controllers
             {
                 Username = user.UserName,
                 Token = _tokenService.CreateToken(user)
+
             };
         }
 
