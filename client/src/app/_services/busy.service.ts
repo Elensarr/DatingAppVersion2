@@ -17,7 +17,6 @@ export class BusyService {
       bdColor: 'rgba(255,255,255,0)',
       color: '#333333'
     });
-    console.log("spinner starts");
   }
 
   idle() {
@@ -25,8 +24,6 @@ export class BusyService {
     //if (this.busyRequestCount <= 0) {
     //  this.busyRequestCount = 0;
     this.spinnerService.hide();
-
-    console.log("spinner stops");
     //}
   }
 }

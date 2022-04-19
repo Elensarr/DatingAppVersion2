@@ -41,19 +41,21 @@ namespace API.Data
 
         public async Task<AppUser> GetUserByUserNameAsync(string username)
         {
-            return await _context.Users.SingleOrDefaultAsync(x => x.UserName == username);
+            return await _context.Users
+                  .Include(p => p.Photos)
+                  .SingleOrDefaultAsync(x => x.UserName == username);
         }
 
         public async Task<IEnumerable<AppUser>> GetUsersAsync()
         {
             return await _context.Users
-                .Include(p=>p.Photos) // eager loading of photos
+                .Include(p => p.Photos) // eager loading of photos
                 .ToListAsync();
         }
 
         public async Task<bool> SaveAllAsync()
         {
-            return await _context.SaveChangesAsync()>0; // if smth changed => return an int
+            return await _context.SaveChangesAsync() > 0; // if smth changed => return an int
         }
 
         public void Update(AppUser user)
