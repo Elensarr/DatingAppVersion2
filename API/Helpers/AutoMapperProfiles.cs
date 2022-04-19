@@ -20,6 +20,8 @@ namespace API.Helpers
 
             //from update Dto to user entity
             CreateMap<MemberUpdateDto, AppUser>();
+
+            CreateMap<RegisterDTO, AppUser>();
         }
     }
 }
