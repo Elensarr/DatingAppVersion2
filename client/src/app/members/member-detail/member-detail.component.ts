@@ -48,7 +48,6 @@ export class MemberDetailComponent implements OnInit {
         })
       }
     )
-    console.log(imageUrls);
     return imageUrls;
   }
 

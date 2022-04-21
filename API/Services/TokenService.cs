@@ -25,7 +25,8 @@ namespace API.Services
             // identifyung what claims are put in the token
             var claims = new List<Claim>
             {
-                new Claim(JwtRegisteredClaimNames.NameId, user.UserName)
+                new Claim(JwtRegisteredClaimNames.NameId, user.Id.ToString()),
+                new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName)
             };
             //encrypts _key
             var cred = new SigningCredentials(_key, SecurityAlgorithms.HmacSha256Signature);
