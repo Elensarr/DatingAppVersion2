@@ -1,6 +1,7 @@
 ﻿using API.DTOs;
 using API.Entities;
 using API.Extentions;
+using API.Helpers;
 using API.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -45,8 +46,9 @@ namespace API.Controllers
             // check that user hasn't like user previously
             if (userLike != null)
             {
+                sourceUser.LikedUsers.Remove(userLike);
                 // toggle optiopn (remove like an be implemented here)
-                return BadRequest("You already like this user");
+                return Ok("disliked");
             }
 
             userLike = new UserLike
@@ -59,7 +61,7 @@ namespace API.Controllers
             
             if (await _userRepository.SaveAllAsync())
             {
-                return Ok();
+                return Ok("liked");
             }
 
             return BadRequest("Failed to like user");
@@ -68,9 +70,14 @@ namespace API.Controllers
         // api/likes
         [HttpGet]
         // predicate - taken from url: api/likes?predicate=likedBy
-        public async Task<ActionResult<IEnumerable<LikeDto>>> GetUserLikes(string predicate)
+        public async Task<ActionResult<IEnumerable<LikeDto>>> GetUserLikes([FromQuery]LikesParams likesParams )
         {
-            var users = await _likesRepository.GetUserLikes(predicate, User.GetUserId());
+            likesParams.UserId = User.GetUserId();  
+
+            var users = await _likesRepository.GetUserLikes(likesParams);
+
+            Response.AddPaginationHeader(users.CurrentPage, users.PageSize,
+                users.TotalCount, users.TotalPages);
 
             return Ok(users);
 

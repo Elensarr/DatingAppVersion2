@@ -1,7 +1,8 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { of } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { map, switchMap, take, tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { Member } from '../_models/member';
 import { PaginatedResult } from '../_models/pagination';
@@ -23,7 +24,8 @@ export class MembersService {
 
 
   constructor(private http: HttpClient,
-    private accountService: AccountService) {
+    private accountService: AccountService,
+    private toastr: ToastrService) {
 
     this.accountService.currentUser$.pipe(
       take(1))
@@ -50,13 +52,6 @@ export class MembersService {
 }
 
   getMembers(userParams: UserParams) {
-
-    // simple cashing
-    // if (this.members.length > 0) {
-    //  return of(this.members);
-    // }
-
-
     // cashing
     // Object.values(userParams).join("-")) - used as a key //18-99-1-5-created-female
     var response = this.memberCashe.get(Object.values(userParams).join("-"));
@@ -140,5 +135,31 @@ export class MembersService {
 
   deletePhoto(photoId: number) {
     return this.http.delete(this.baseUrl + "users/delete-photo/" + photoId);
+  }
+
+  //likes
+  addLike(username:string) {
+    let url_string=this.baseUrl + "likes/"+ username;    
+    return this.http.post(this.baseUrl + "likes/"+ username, null, { responseType: "text" })// responseType specified as expect Json forma of response
+    .pipe(
+      tap(
+        response=> {
+          if (response=="liked") 
+        {
+          this.toastr.success("You have liked " + username);
+        }
+        else if (response=="disliked") {
+          this.toastr.error("You have disliked " + username);
+        }
+        }
+      )      
+    ); 
+    
+  }
+
+  getLikes(predicate:string, pageNumber: number,  pageSize: number) {    
+    let params = this.getPaginationHeaders(pageNumber, pageSize);
+    params = params.append('predicate', predicate);
+    return this.getPaginatedResult<Partial<Member[]>>(this.baseUrl + "likes", params);
   }
 }
