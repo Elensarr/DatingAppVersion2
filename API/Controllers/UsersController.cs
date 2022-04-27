@@ -28,7 +28,6 @@ namespace API.Controllers
 
         //api/users
         [HttpGet]
-        [AllowAnonymous]
         //[FromQuery] where to take string
         public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers([FromQuery]UserParams userParams)
         {

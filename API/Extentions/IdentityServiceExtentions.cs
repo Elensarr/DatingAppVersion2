@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using System.Text;
+using API.Data;
+using API.Entities;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
 
 namespace API.Extentions
 {
@@ -10,6 +13,17 @@ namespace API.Extentions
             this IServiceCollection services,
             IConfiguration config)
         {
+            services.AddIdentityCore<AppUser>(
+                opt =>
+                {
+                    opt.Password.RequireNonAlphanumeric = false;
+                })                
+                .AddRoles<AppRole>()// chaining services
+                .AddRoleManager<RoleManager<AppRole>>()
+                .AddSignInManager<SignInManager<AppUser>>()
+                .AddRoleValidator<RoleValidator<AppRole>>()
+                .AddEntityFrameworkStores<DataContext>(); // sets up database to create identity service
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(
                 options =>
