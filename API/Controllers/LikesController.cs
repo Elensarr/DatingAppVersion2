@@ -12,8 +12,8 @@ namespace API.Controllers
     [Authorize]
     public class LikesController : BaseApiController
     {
-        private ILikesRepository _likesRepository;
-        private IUserRepository _userRepository;
+        private readonly ILikesRepository _likesRepository;
+        private readonly IUserRepository _userRepository;
 
         public LikesController(IUserRepository userRepository,
             ILikesRepository likesRepository)

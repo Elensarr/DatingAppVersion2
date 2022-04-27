@@ -5,11 +5,8 @@ namespace API.Helpers
     public class PagedList<T> : List<T> // inherit from list, T - generic type, can take any type of entity
     {
         public PagedList(IEnumerable<T> items, int count, int pageNumber, int pageSize) // items - get from query
-        {
-            // why capital letter?
-            CurrentPage = pageNumber;
-            //???      
-            // why need (double)
+        {            
+            CurrentPage = pageNumber;            
             TotalPages = (int)Math.Ceiling(count / (double) pageSize);
             PageSize = pageSize;
             TotalCount = count;

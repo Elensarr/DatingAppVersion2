@@ -82,7 +82,7 @@ namespace API.Data.Migrations
                     b.Property<DateTime>("MessageSent")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("RecipentId")
+                    b.Property<int?>("RecipientId")
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("RecipientDeleted")
@@ -105,7 +105,7 @@ namespace API.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RecipentId");
+                    b.HasIndex("RecipientId");
 
                     b.HasIndex("SenderId");
 
@@ -154,9 +154,9 @@ namespace API.Data.Migrations
 
             modelBuilder.Entity("API.Entities.Message", b =>
                 {
-                    b.HasOne("API.Entities.AppUser", "Recipent")
+                    b.HasOne("API.Entities.AppUser", "Recipient")
                         .WithMany("MessagesRecieved")
-                        .HasForeignKey("RecipentId")
+                        .HasForeignKey("RecipientId")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("API.Entities.AppUser", "Sender")
@@ -165,7 +165,7 @@ namespace API.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Recipent");
+                    b.Navigation("Recipient");
 
                     b.Navigation("Sender");
                 });

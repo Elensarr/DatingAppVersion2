@@ -1,0 +1,22 @@
+* {
+    box-sizing: border-box;
+   /* overflow:hidden;*/
+  }
+.card-body li {
+    padding: 1px;
+   
+}
+
+
+
+.chat {
+    list-style:none;
+    margin: 0;
+    padding: 2px;
+}
+
+.rounded-circle {
+    max-height: 40px;
+    margin: 2px;
+}
+

@@ -1,4 +1,5 @@
-﻿using API.Entities;
+﻿using API.DTOs;
+using API.Entities;
 using API.Helpers;
 
 namespace API.Interfaces
@@ -8,8 +9,8 @@ namespace API.Interfaces
         void AddMessage(Message  message);
         void DeleteMessage(Message message);
         Task<Message> GetMessageAsync(int id);
-        Task<PagedList<MessageDto>> GetMessagesForUserAsync();
-        Task<IEnumerable<MessageDto>> GetMessageThread(int currentUserId, int recipientId);
+        Task<PagedList<MessageDto>> GetMessagesForUserAsync(MessageParams messageParams);
+        Task<IEnumerable<MessageDto>> GetMessageThread(string currentUsername, string recipientUsername);
         Task<bool> SaveAllAsync();
     }
 }

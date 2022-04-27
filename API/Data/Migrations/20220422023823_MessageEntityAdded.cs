@@ -19,7 +19,6 @@ namespace API.Data.Migrations
                     SenderUsername = table.Column<string>(type: "TEXT", nullable: true),
                     RecipientId = table.Column<int>(type: "INTEGER", nullable: false),
                     RecipientUsername = table.Column<string>(type: "TEXT", nullable: true),
-                    RecipentId = table.Column<int>(type: "INTEGER", nullable: true),
                     Content = table.Column<string>(type: "TEXT", nullable: true),
                     DateRead = table.Column<DateTime>(type: "TEXT", nullable: true),
                     MessageSent = table.Column<DateTime>(type: "TEXT", nullable: false),
@@ -30,8 +29,8 @@ namespace API.Data.Migrations
                 {
                     table.PrimaryKey("PK_Messages", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Messages_Users_RecipentId",
-                        column: x => x.RecipentId,
+                        name: "FK_Messages_Users_RecipientId",
+                        column: x => x.RecipientId,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -44,9 +43,9 @@ namespace API.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Messages_RecipentId",
+                name: "IX_Messages_RecipientId",
                 table: "Messages",
-                column: "RecipentId");
+                column: "RecipientId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Messages_SenderId",

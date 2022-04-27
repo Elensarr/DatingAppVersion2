@@ -37,7 +37,7 @@ namespace API.Data
 
             // messages table
             builder.Entity<Message>()
-                .HasOne(u => u.Recipent)
+                .HasOne(u => u.Recipient)
                 .WithMany(m => m.MessagesRecieved)
                 .OnDelete(DeleteBehavior.Restrict);
 
